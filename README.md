@@ -313,10 +313,10 @@ Sets a piece of a specific kind and a specific color on one or more field.
 ```javascript
 cbCtx.setPiece(['a1', 'h1'], 'white_rock');
 
-// other way to do this
+// another way to do this
 cbCtx.setPiece({
-    'field': ['a1', 'h1'],
-    'type': 'white_rock',
+    'field': 'e8',
+    'type': 'black_king',
 });
 ```
 
