@@ -321,7 +321,7 @@ cbCtx.setRock(['a1', 'h1'], 'white')  // set white rock at more than one field
      
 // another way
 cbCtx.setRock({
-    field: ['A1', 'H1'],
+    field: ['A1', 'H1'],  // fields are NOT case-sensitive
     color: 'w',  // for black color is alias is
                  // simply 'b'
 });
