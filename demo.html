@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <title></title>
+        
+        <script type="text/javascript" src="jquery-2.1.0.js"></script>
+        <script type="text/javascript" src="jquery.chessBoard.js"></script>
+        
+        <script type="text/javascript">
+        
+            $(document).ready(function() {
+                var cb1;
+                cb1 = $('#chessBoard1').chessBoard({
+                    'onClick': function(ctx) {
+                        ctx.toggleHighlight();
+                    },
+                });
+                
+                cb1.startPosition();
+            });
+        
+        </script>
+    </head>
+    
+    <body>
+        <div id="chessBoard1"></div>
+    </body>
+</html>
