@@ -221,7 +221,7 @@ The structure has the following defaults:
         'bishop': '&#9821;',
         'king'  : '&#9818;',
         'knight': '&#9822;',
-        'pawn'  : '&#9817;',
+        'pawn'  : '&#9823;',
         'queen' : '&#9819;',
         'rock'  : '&#9820;',
     },
@@ -232,7 +232,7 @@ The structure has the following defaults:
         'bishop': '&#9815;',
         'king'  : '&#9812;',
         'knight': '&#9816;',
-        'pawn'  : '&#9823;',
+        'pawn'  : '&#9817;',
         'queen' : '&#9813;',
         'rock'  : '&#9814;',
     },
@@ -273,6 +273,15 @@ var cbCtx = $('#myChessBoard').chessBoard({
 });
 ```
 
+##### setStartPosition
+
+Defines if _startPosition()_ method should be called or not.
+
+```javascript
+var cbCtx = $('#myChessBoard').chessBoard({
+    'setStartPosition': true,
+});
+
 ### Result
 
 A call of the plugin's method returns an object that provides features to handle all created chessboards.
@@ -299,6 +308,14 @@ Clears all fields from pieces.
 cbCtx.clear();
 ```
 
+##### getField()
+
+Returns a field.
+
+```javascript
+var fieldA1 = cbCtx.field('a1');
+```
+
 ##### getHighlighted()
 
 Returns a jQuery object with all highlighted fields.
@@ -306,6 +323,14 @@ Returns a jQuery object with all highlighted fields.
 ```javascript
 var highlightedFields = cbCtx.getHighlighted();
 alert(highlightedFields.length);
+```
+
+##### hide()
+
+Hides the chess board(s).
+
+```javascript
+cbCtx.hide();
 ```
 
 ##### removePiece()
@@ -385,6 +410,14 @@ cbCtx.setRock({
     color: 'w',  // for black color is alias is
                  // simply 'b'
 });
+```
+
+##### show()
+
+Shows the chess board(s).
+
+```javascript
+cbCtx.show();
 ```
 
 ##### startPosition()
