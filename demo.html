@@ -12,10 +12,12 @@
                 cb1 = $('#chessBoard1').chessBoard({
                     'onClick': function(ctx) {
                         ctx.toggleHighlight();
+                        
+                        alert(ctx.name);
                     },
+                    
+                    'setStartPosition': true,
                 });
-                
-                cb1.startPosition();
             });
         
         </script>

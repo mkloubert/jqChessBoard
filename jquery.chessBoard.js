@@ -26,6 +26,53 @@
     $.fn.chessBoard = function(opts) {
         var rowNames = '87654321';
         var colNames = 'ABCDEFGH';
+              
+        var _createFieldObject = function(field, fieldName, x, y) {
+            var fieldObj = {
+                'disacknowledge': function() {
+                    this.field.removeClass('cbFieldHighlighted');
+                    
+                    if (opts.onDisacknowledgeField) {
+                        opts.onDisacknowledgeField(this);
+                    }
+
+                    return this;
+                },
+                'field': field,
+                'highlight': function() {
+                    this.field.addClass('cbFieldHighlighted');
+                    
+                    if (opts.onHighlightField) {
+                        opts.onHighlightField(this);
+                    }
+                    
+                    return this;
+                },
+                'name': fieldName,
+                'pos': {
+                    'x': x,
+                    'y': y,
+                },
+                'toggleHighlight': function() {
+                    if (this.isHighlighted) {
+                        this.disacknowledge();
+                    }
+                    else {
+                        this.highlight();
+                    }
+                    
+                    return this;
+                },
+            };
+            
+            Object.defineProperty(fieldObj, 'isHighlighted', {
+                get: function () {
+                    return this.field.hasClass('cbFieldHighlighted');
+                }
+            });
+            
+            return fieldObj;
+        };
         
         var _getFieldBgColor = function(x, y) {
             var bg = opts.darkColor;
@@ -82,7 +129,7 @@
             },
             'onPaintPiece': function(ctx) {
                 ctx.piece.css('display'       , 'block');
-                ctx.piece.css('font-size'     , '48px');
+                ctx.piece.css('font-size'     , opts.pieceSize);
                 ctx.piece.css('text-align'    , 'center');
                 ctx.piece.css('vertical-align', 'middle');
             },
@@ -95,6 +142,8 @@
                     ctx.field.css('height', opts.fieldHeight);
                 }
             },
+            'pieceSize': '48px',
+            'setStartPosition': false,
         }, opts);
         
         opts.pieces = $.extend({
@@ -105,7 +154,7 @@
             'bishop': '&#9821;',
             'king'  : '&#9818;',
             'knight': '&#9822;',
-            'pawn'  : '&#9817;',
+            'pawn'  : '&#9823;',
             'queen' : '&#9819;',
             'rock'  : '&#9820;',
         }, opts.pieces.black);
@@ -114,7 +163,7 @@
             'bishop': '&#9815;',
             'king'  : '&#9812;',
             'knight': '&#9816;',
-            'pawn'  : '&#9823;',
+            'pawn'  : '&#9817;',
             'queen' : '&#9813;',
             'rock'  : '&#9814;',
         }, opts.pieces.white);
@@ -128,47 +177,6 @@
                         opts.onClick(fieldObj);
                     }
                 };
-            };
-            
-            var _createFieldObject = function(field, fieldName, x, y) {
-                var fieldObj = {
-                    'disacknowledge': function() {
-                        if (opts.onDisacknowledgeField) {
-                            opts.onDisacknowledgeField(this);
-                        }
-                        
-                        this.field.removeClass('cbFieldHighlighted');
-                    },
-                    'field': field,
-                    'highlight': function() {
-                        this.field.addClass('cbFieldHighlighted');
-                        
-                        if (opts.onHighlightField) {
-                            opts.onHighlightField(this);
-                        }
-                    },
-                    'name': fieldName,
-                    'pos': {
-                        'x': x,
-                        'y': y,
-                    },
-                    'toggleHighlight': function() {
-                        if (this.isHighlighted) {
-                            this.disacknowledge();
-                        }
-                        else {
-                            this.highlight();
-                        }
-                    },
-                };
-                
-                Object.defineProperty(fieldObj, 'isHighlighted', {
-                    get: function () {
-                        return this.field.hasClass('cbFieldHighlighted');
-                    }
-                });
-                
-                return fieldObj;
             };
                 
             for (var y = 0; y < 8; y++) {
@@ -242,7 +250,7 @@
         };
         
         var result = {
-            'clear': function(field) {              
+            'clear': function() {              
                 for (var y = 0; y < 8; y++) {
                     for (var x = 0; x < 8; x++) {
                         this.removePiece(colNames[x] + rowNames[y]);
@@ -251,15 +259,87 @@
                 
                 return this;
             },
+            'getField': function(field) {
+                field = $.trim(field).toUpperCase();
+            
+                var fieldObj = {
+                    'disacknowledge': function() {
+                        this._C2B52D8B72994977B33B4C47ED0AE379.disacknowledge();
+                        return this;
+                    },
+                    'getPiece': function() {
+                        var p = {
+                            'selector': this.selector.find('.cbPiece'),
+                        };
+                        
+                        var clsName = p.selector.attr('class');
+                        
+                        if (clsName) {
+                            if (clsName.indexOf('cbPieceBlack') > -1) {
+                                p.color = 'B';
+                            }
+                            else if (clsName.indexOf('cbPieceWhite') > -1) {
+                                p.color = 'W';
+                            }
+                            
+                            if (clsName.indexOf('cbPieceBishop') > -1) {
+                                p.type = 'BISHOP';
+                            }
+                            else if (clsName.indexOf('cbPieceKing') > -1) {
+                                p.type = 'KING';
+                            }
+                            else if (clsName.indexOf('cbPieceKnight') > -1) {
+                                p.type = 'KNIGHT';
+                            }
+                            else if (clsName.indexOf('cbPiecePawn') > -1) {
+                                p.type = 'PAWN';
+                            }
+                            else if (clsName.indexOf('cbPieceQueen') > -1) {
+                                p.type = 'QUEEN';
+                            }
+                            else if (clsName.indexOf('cbPieceRock') > -1) {
+                                p.type = 'ROCK';
+                            }
+                        }
+                        
+                        return (p.color && p.type) ? p : null;
+                    },
+                    'highlight': function() {
+                        this._C2B52D8B72994977B33B4C47ED0AE379.highlight();
+                        return this;
+                    },
+                    'name': field,
+                    'pos': {
+                        'x': colNames.indexOf(field[0]),
+                        'y': rowNames.indexOf(8 - field[1]),
+                    },
+                    'removePiece': function() {
+                        this.selector.html('');
+                        return;
+                    },
+                    'selector': this.selector
+                                    .find('.cbField' + field),
+                    'toggleHighlight': function() {
+                        this._C2B52D8B72994977B33B4C47ED0AE379.toggleHighlight();
+                        return this;
+                    },
+                };
+                
+                fieldObj._C2B52D8B72994977B33B4C47ED0AE379 = _createFieldObject(fieldObj.selector, fieldObj.name,
+                                                                                fieldObj.pos.x, fieldObj.pos.y);
+                
+                return fieldObj;
+            },
             'getHighlighted': function() {
                 return this.selector
                            .find('.cbFieldHighlighted');
             },
+            'hide': function() {
+                this.selector.hide();
+                return this;
+            },
             'removePiece': function(field) {
-                this.selector
-                    .find('.cbField' + $.trim(field).toUpperCase())
-                    .html('');
-                    
+                this.getField().removePiece();
                 return this;
             },
             'selector': this.find('.chessBoard'),
@@ -315,7 +395,7 @@
                     case 'BLACK_BISHOP':
                     case 'BB':
                         htmlCode = opts.pieces.black.bishop;
-                        pieceClasses = ['cbPieceBishop', 'cbPieceBlackBishop'];
+                        pieceClasses = ['cbPieceBlack', 'cbPieceBishop', 'cbPieceBlackBishop'];
                         pType = {
                             'class': 'BISHOP',
                             'color': 'B',
@@ -326,7 +406,7 @@
                     case 'BLACK_KING':
                     case 'BK':
                         htmlCode = opts.pieces.black.king;
-                        pieceClasses = ['cbPieceKing', 'cbPieceBlackKing'];
+                        pieceClasses = ['cbPieceBlack', 'cbPieceKing', 'cbPieceBlackKing'];
                         pType = {
                             'class': 'KING',
                             'color': 'B',
@@ -337,7 +417,7 @@
                     case 'BLACK_KNIGHT':
                     case 'BKN':
                         htmlCode = opts.pieces.black.knight;
-                        pieceClasses = ['cbPieceKnight', 'cbPieceBlackKnight'];
+                        pieceClasses = ['cbPieceBlack', 'cbPieceKnight', 'cbPieceBlackKnight'];
                         pType = {
                             'class': 'KNIGHT',
                             'color': 'B',
@@ -348,7 +428,7 @@
                     case 'BLACK_PAWN':
                     case 'BP':
                         htmlCode = opts.pieces.black.pawn;
-                        pieceClasses = ['cbPiecePawn', 'cbPieceBlackPawn'];
+                        pieceClasses = ['cbPieceBlack', 'cbPiecePawn', 'cbPieceBlackPawn'];
                         pType = {
                             'class': 'PAWN',
                             'color': 'B',
@@ -359,7 +439,7 @@
                     case 'BLACK_QUEEN':
                     case 'BQ':
                         htmlCode = opts.pieces.black.queen;
-                        pieceClasses = ['cbPieceQueen', 'cbPieceBlackQueen'];
+                        pieceClasses = ['cbPieceBlack', 'cbPieceQueen', 'cbPieceBlackQueen'];
                         pType = {
                             'class': 'QUEEN',
                             'color': 'B',
@@ -370,7 +450,7 @@
                     case 'BLACK_ROCK':
                     case 'BR':
                         htmlCode = opts.pieces.black.rock;
-                        pieceClasses = ['cbPieceRock', 'cbPieceBlackRock'];
+                        pieceClasses = ['cbPieceBlack', 'cbPieceRock', 'cbPieceBlackRock'];
                         pType = {
                             'class': 'ROCK',
                             'color': 'B',
@@ -381,7 +461,7 @@
                     case 'WHITE_BISHOP':
                     case 'WB':
                         htmlCode = opts.pieces.white.bishop;
-                        pieceClasses = ['cbPieceBishop', 'cbPieceWhiteBishop'];
+                        pieceClasses = ['cbPieceWhite', 'cbPieceBishop', 'cbPieceWhiteBishop'];
                         pType = {
                             'class': 'BISHOP',
                             'color': 'W',
@@ -392,7 +472,7 @@
                     case 'WHITE_KING':
                     case 'WK':
                         htmlCode = opts.pieces.white.king;
-                        pieceClasses = ['cbPieceKing', 'cbPieceWhiteKing'];
+                        pieceClasses = ['cbPieceWhite', 'cbPieceKing', 'cbPieceWhiteKing'];
                         pType = {
                             'class': 'KING',
                             'color': 'W',
@@ -403,7 +483,7 @@
                     case 'WHITE_KNIGHT':
                     case 'WKN':
                         htmlCode = opts.pieces.white.knight;
-                        pieceClasses = ['cbPieceKnight', 'cbPieceWhiteKnight'];
+                        pieceClasses = ['cbPieceWhite', 'cbPieceKnight', 'cbPieceWhiteKnight'];
                         pType = {
                             'class': 'KNIGHT',
                             'color': 'W',
@@ -414,7 +494,7 @@
                     case 'WHITE_PAWN':
                     case 'WP':
                         htmlCode = opts.pieces.white.pawn;
-                        pieceClasses = ['cbPiecePawn', 'cbPieceWhitePawn'];
+                        pieceClasses = ['cbPieceWhite', 'cbPiecePawn', 'cbPieceWhitePawn'];
                         pType = {
                             'class': 'PAWN',
                             'color': 'W',
@@ -425,7 +505,7 @@
                     case 'WHITE_QUEEN':
                     case 'WQ':
                         htmlCode = opts.pieces.white.queen;
-                        pieceClasses = ['cbPieceQueen', 'cbPieceWhiteQueen'];
+                        pieceClasses = ['cbPieceWhite', 'cbPieceQueen', 'cbPieceWhiteQueen'];
                         pType = {
                             'class': 'QUEEN',
                             'color': 'W',
@@ -436,7 +516,7 @@
                     case 'WHITE_ROCK':
                     case 'WR':
                         htmlCode = opts.pieces.white.rock;
-                        pieceClasses = ['cbPieceRock', 'cbPieceWhiteRock'];
+                        pieceClasses = ['cbPieceWhite', 'cbPieceRock', 'cbPieceWhiteRock'];
                         pType = {
                             'class': 'ROCK',
                             'color': 'W',
@@ -450,7 +530,8 @@
                         break;
                 }
                 
-                var pieceElement = $('<span class="cbPiece"></span>');
+                var pieceElement = $('<span></span>');
+                pieceElement.addClass('cbPiece');
                 if (typeof(htmlCode) == "function") {
                     pieceElement.html(htmlCode({
                         'piece': pieceElement,
@@ -487,6 +568,10 @@
 
                 return this;
             },
+            'show': function() {
+                this.selector.show();
+                return this;
+            },
             'startPosition': function(spOpts) {
                 spOpts = $.extend({
                 }, spOpts);
@@ -507,13 +592,17 @@
                 
                 // pawns                
                 for (var i = 0; i < 8; i++) {
-                    this.setPawn(colNames[i] + '7', 'white')
-                        .setPawn(colNames[i] + '2', 'black');
+                    this.setPawn(colNames[i] + '7', 'black')
+                        .setPawn(colNames[i] + '2', 'white');
                 }
             
                 return this;
             },
         };
+        
+        if (opts.setStartPosition) {
+            result.startPosition();
+        }
         
         return result;
     };
