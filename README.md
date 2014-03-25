@@ -263,6 +263,16 @@ _ctx.type_ can contain the following values:
 * QUEEN
 * ROCK
 
+##### pieceSize
+
+CSS compatible size of a piece (default: _48px_).
+
+```javascript
+var cbCtx = $('#myChessBoard').chessBoard({
+    'pieceSize': '32px',
+});
+```
+
 ### Result
 
 A call of the plugin's method returns an object that provides features to handle all created chessboards.
