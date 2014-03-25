@@ -16,10 +16,203 @@ jQuery based library for building and painting chess boards WITHOUT game engines
 ```javascript
 // simple use
 var cbCtx = $('#myChessBoard').chessBoard();
+
+cbCtx.startPosition();
 ```
 
 ### Options
 
+#### Events
+
+##### Event arguments
+
+Each event gets an object of the following structure as only parameter.
+
+###### Fields
+
+###### field
+
+jQuery object that represents the field.
+
+```javascript
+{
+    onClick: function(ctx) {
+        ctx.field.toggle();
+    },
+}
+```
+
+###### name
+
+Uppercase name of the field, e.g. _E6_.
+
+```javascript
+{
+    onClick: function(ctx) {
+        alert(ctx.name);
+    },
+}
+```
+
+###### pos
+
+Zero based X- and Y-coordinate of the underlying field.
+
+```javascript
+{
+    onClick: function(ctx) {
+        var x = ctx.pos.x;
+        var y = ctx.pos.y;
+    },
+}
+```
+
+###### Methods
+
+###### disacknowledge()
+
+Disacknowledges a field.
+
+```javascript
+{
+    onClick: function(ctx) {
+        ctx.disacknowledge();
+    },
+}
+```
+
+###### highlight()
+
+Highlights a field.
+
+```javascript
+{
+    onClick: function(ctx) {
+        ctx.highlight();
+    },
+}
+```
+
+###### toggleHighlight()
+
+Toggles the highlight state of a field.
+
+```javascript
+{
+    onClick: function(ctx) {
+        ctx.toggleHighlight();
+    },
+}
+```
+
+##### Event list
+
+###### onClick
+
+Is invoked if a field is clicked.
+
+###### onDisacknowledgeField
+
+Is invoked if a field gets disacknowledged.
+
+###### onHighlightField
+
+Is invoked if a field gets highlighted.
+
+###### onPaintField
+
+Is invoked when a field is painted.
+
+###### onPaintPiece
+
+Is invoked when a piece is painted.
+
+###### onResizeField
+
+Is invoked when a field is resized.
+
+#### Fields
+
+##### css
+
+Optional styles for the chess board itself. That value is compatible with jQuery's css() method.
+
+```javascript
+// simple use
+var cbCtx = $('#myChessBoard').chessBoard({
+    'css': {
+        'backgroundColor': 'pink',
+    },
+});
+```
+
+##### darkColor
+
+CSS compatible background color for dark fields (default: _#d18b47_).
+
+```javascript
+// simple use
+var cbCtx = $('#myChessBoard').chessBoard({
+    'darkColor': 'red',
+});
+```
+
+##### fieldCss
+
+Value that is compatible with jQuery's css() method and is used when a field is painted. Is not defined by default.
+
+```javascript
+// simple use
+var cbCtx = $('#myChessBoard').chessBoard({
+    'fieldCss': {
+        'padding': '66px',
+    },
+});
+```
+
+##### fieldHeight
+
+CSS compatibe value for the height of a field. Is not defined by default.
+
+```javascript
+// simple use
+var cbCtx = $('#myChessBoard').chessBoard({
+    'fieldHeight': '5979px',
+});
+```
+
+##### fieldWidth
+
+CSS compatible width of a field (default: _64px_).
+
+```javascript
+// simple use
+var cbCtx = $('#myChessBoard').chessBoard({
+    'fieldWidth': '96px',
+});
+```
+
+##### highlightColor
+
+CSS compatible color if a field is highlighted (default: _#4cff4c_).
+
+```javascript
+// simple use
+var cbCtx = $('#myChessBoard').chessBoard({
+    'highlightColor': '#fff',
+});
+```
+
+##### lightColor
+
+CSS compatible color for light fields (default: _#ffce9e_).
+
+```javascript
+// simple use
+var cbCtx = $('#myChessBoard').chessBoard({
+    lightColor: '#123456',
+});
+```
 
 ### Result
 
@@ -36,7 +229,7 @@ cbCtx..selector.find('cbField').each(function() {
 });
 ```
 
-#### Functions
+#### Methods
 
 ##### clear()
 
@@ -137,3 +330,6 @@ cbCtx.setRock({
 
 Resets the chessboard and places all pieces to their start positions.
 
+```javascript
+cbCtx.startPosition();
+```
