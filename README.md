@@ -281,7 +281,7 @@ A call of the plugin's method returns an object that provides features to handle
 The underlying jQuery selector.
 
 ```javascript
-cbCtx.selector.find('cbField').each(function() {
+cbCtx.selector.find('.cbField').each(function() {
     //TODO
 });
 ```
