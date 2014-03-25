@@ -46,17 +46,17 @@
         opts = $.extend({
             'darkColor' : '#d18b47',
             'fieldWidth': '64px',
-            'hoverColor': '#4cff4c',
+            'highlightColor': '#4cff4c',
             'lightColor': '#ffce9e',
-            'onHoverField': function(ctx) {
-                ctx.field
-                   .css('backgroundColor',
-                        opts.hoverColor);
-            },
             'onDisacknowledgeField': function(ctx) {
                 ctx.field
                    .css('backgroundColor',
                         _getFieldBgColor(ctx.pos.x, ctx.pos.y));
+            },
+            'onHighlightField': function(ctx) {
+                ctx.field
+                   .css('backgroundColor',
+                        opts.highlightColor);
             },
             'onPaintField': function(ctx) {
                 var bg = _getFieldBgColor(ctx.pos.x,
@@ -127,7 +127,7 @@
                 };
             };
             
-            var _createFieldObject = function(field, fieldName) {
+            var _createFieldObject = function(field, fieldName, x, y) {
                 var fieldObj = {
                     'disacknowledge': function() {
                         if (opts.onDisacknowledgeField) {
@@ -140,8 +140,8 @@
                     'highlight': function() {
                         this.field.addClass('cbFieldHighlighted');
                         
-                        if (opts.onHoverField) {
-                            opts.onHoverField(this);
+                        if (opts.onHighlightField) {
+                            opts.onHighlightField(this);
                         }
                     },
                     'name': fieldName,
@@ -175,17 +175,17 @@
                 newRow.addClass('cbRow' + rowNames.charAt(y));
                 
                 for (var x = 0; x < 8; x++) {
-                    var cellName = colNames.charAt(x) + rowNames.charAt(y);
+                    var fieldName = colNames.charAt(x) + rowNames.charAt(y);
                     
                     var newField = $('<td></td>');
                     
-                    var fieldObj = _createFieldObject(newField, cellName);
-                    newField.chessFields = fieldObj;
+                    var fieldObj = _createFieldObject(newField, fieldName, x, y);
+                    newField.chessField = fieldObj;
                     
                     newField.addClass('cbField');
                     newField.addClass('cbField' + (x % 2 == 0 ? 'Odd' : 'Even'));
                     newField.addClass('cbField' + colNames.charAt(x));
-                    newField.addClass('cbField' + cellName);
+                    newField.addClass('cbField' + fieldName);
 
                     newField.click(_createFieldClickFunc(fieldObj));
                     
