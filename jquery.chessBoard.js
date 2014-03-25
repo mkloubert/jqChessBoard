@@ -95,26 +95,29 @@
                     ctx.field.css('height', opts.fieldHeight);
                 }
             },
-            'pieces': {
-                'black': {
-                    'bishop': '&#9821;',
-                    'king'  : '&#9818;',
-                    'knight': '&#9822;',
-                    'pawn'  : '&#9817;',
-                    'queen' : '&#9819;',
-                    'rock'  : '&#9820;',
-                },
-                'none': '',
-                'white': {
-                    'bishop': '&#9815;',
-                    'king'  : '&#9812;',
-                    'knight': '&#9816;',
-                    'pawn'  : '&#9823;',
-                    'queen' : '&#9813;',
-                    'rock'  : '&#9814;',
-                },
-            },
         }, opts);
+        
+        opts.pieces = $.extend({
+            'none': '',
+        }, opts.pieces);
+        
+        opts.pieces.black = $.extend({
+            'bishop': '&#9821;',
+            'king'  : '&#9818;',
+            'knight': '&#9822;',
+            'pawn'  : '&#9817;',
+            'queen' : '&#9819;',
+            'rock'  : '&#9820;',
+        }, opts.pieces.black);
+        
+        opts.pieces.white = $.extend({
+            'bishop': '&#9815;',
+            'king'  : '&#9812;',
+            'knight': '&#9816;',
+            'pawn'  : '&#9823;',
+            'queen' : '&#9813;',
+            'rock'  : '&#9814;',
+        }, opts.pieces.white);
         
         this.each(function() {
             var tbl = $('<table class="chessBoard"></table>');
@@ -311,8 +314,8 @@
                         htmlCode = opts.pieces.black.bishop;
                         pieceClasses = ['cbPieceBishop', 'cbPieceBlackBishop'];
                         pType = {
+                            'class': 'BISHOP',
                             'color': 'B',
-                            'type' : 'BISHOP',
                         };
                         break;
                     
@@ -322,8 +325,8 @@
                         htmlCode = opts.pieces.black.king;
                         pieceClasses = ['cbPieceKing', 'cbPieceBlackKing'];
                         pType = {
+                            'class': 'KING',
                             'color': 'B',
-                            'type' : 'KING',
                         };
                         break;
                     
@@ -333,8 +336,8 @@
                         htmlCode = opts.pieces.black.knight;
                         pieceClasses = ['cbPieceKnight', 'cbPieceBlackKnight'];
                         pType = {
+                            'class': 'KNIGHT',
                             'color': 'B',
-                            'type' : 'KNIGHT',
                         };
                         break;
                         
@@ -344,8 +347,8 @@
                         htmlCode = opts.pieces.black.pawn;
                         pieceClasses = ['cbPiecePawn', 'cbPieceBlackPawn'];
                         pType = {
+                            'class': 'PAWN',
                             'color': 'B',
-                            'type' : 'PAWN',
                         };
                         break;
                         
@@ -355,8 +358,8 @@
                         htmlCode = opts.pieces.black.queen;
                         pieceClasses = ['cbPieceQueen', 'cbPieceBlackQueen'];
                         pType = {
+                            'class': 'QUEEN',
                             'color': 'B',
-                            'type' : 'QUEEN',
                         };
                         break;
                         
@@ -366,8 +369,8 @@
                         htmlCode = opts.pieces.black.rock;
                         pieceClasses = ['cbPieceRock', 'cbPieceBlackRock'];
                         pType = {
+                            'class': 'ROCK',
                             'color': 'B',
-                            'type' : 'ROCK',
                         };
                         break;
                         
@@ -377,8 +380,8 @@
                         htmlCode = opts.pieces.white.bishop;
                         pieceClasses = ['cbPieceBishop', 'cbPieceWhiteBishop'];
                         pType = {
+                            'class': 'BISHOP',
                             'color': 'W',
-                            'type' : 'BISHOP',
                         };
                         break;
                         
@@ -388,8 +391,8 @@
                         htmlCode = opts.pieces.white.king;
                         pieceClasses = ['cbPieceKing', 'cbPieceWhiteKing'];
                         pType = {
+                            'class': 'KING',
                             'color': 'W',
-                            'type' : 'KING',
                         };
                         break;
                     
@@ -399,8 +402,8 @@
                         htmlCode = opts.pieces.white.knight;
                         pieceClasses = ['cbPieceKnight', 'cbPieceWhiteKnight'];
                         pType = {
+                            'class': 'KNIGHT',
                             'color': 'W',
-                            'type' : 'KNIGHT',
                         };
                         break;
                         
@@ -410,8 +413,8 @@
                         htmlCode = opts.pieces.white.pawn;
                         pieceClasses = ['cbPiecePawn', 'cbPieceWhitePawn'];
                         pType = {
+                            'class': 'PAWN',
                             'color': 'W',
-                            'type' : 'PAWN',
                         };
                         break;
                         
@@ -421,8 +424,8 @@
                         htmlCode = opts.pieces.white.queen;
                         pieceClasses = ['cbPieceQueen', 'cbPieceWhiteQueen'];
                         pType = {
+                            'class': 'QUEEN',
                             'color': 'W',
-                            'type' : 'QUEEN',
                         };
                         break;
                         
@@ -432,18 +435,15 @@
                         htmlCode = opts.pieces.white.rock;
                         pieceClasses = ['cbPieceRock', 'cbPieceWhiteRock'];
                         pType = {
+                            'class': 'ROCK',
                             'color': 'W',
-                            'type' : 'ROCK',
                         };
                         break;
                         
                     case '':
                         htmlCode = opts.pieces.none;
                         pieceClasses = ['cbPieceNone'];
-                        pType = {
-                            'color': null,
-                            'type' : 'NONE',
-                        };
+                        pType = null;
                         break;
                 }
                 
