@@ -249,6 +249,8 @@
                         this.removePiece(colNames[x] + rowNames[y]);
                     }
                 }
+                
+                return this;
             },
             'getHighlighted': function() {
                 return this.selector
@@ -258,6 +260,8 @@
                 this.selector
                     .find('.cbField' + $.trim(field).toUpperCase())
                     .html('');
+                    
+                return this;
             },
             'selector': this.find('.chessBoard'),
             'setBishop': function() {
