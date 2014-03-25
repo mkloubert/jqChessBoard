@@ -3,6 +3,8 @@ jquery-chessBoard
 
 jQuery based library for building and painting chess boards WITHOUT game engines and computer player alogrithms.
 
+![Screenshot (Firefox 28)](https://raw.githubusercontent.com/mkloubert/jquery-chessBoard/master/screenshot.png)
+
 ## Getting Started
 
 ### Mark up tags whose content you want to be translated
