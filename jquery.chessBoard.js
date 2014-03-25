@@ -242,8 +242,7 @@
         };
         
         var result = {
-            'clear': function(field) {
-                // pawns                
+            'clear': function(field) {              
                 for (var y = 0; y < 8; y++) {
                     for (var x = 0; x < 8; x++) {
                         this.removePiece(colNames[x] + rowNames[y]);
