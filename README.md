@@ -140,7 +140,6 @@ Is invoked when a field is resized.
 Optional styles for the chess board itself. That value is compatible with jQuery's css() method.
 
 ```javascript
-// simple use
 var cbCtx = $('#myChessBoard').chessBoard({
     'css': {
         'backgroundColor': 'pink',
@@ -153,7 +152,6 @@ var cbCtx = $('#myChessBoard').chessBoard({
 CSS compatible background color for dark fields (default: _#d18b47_).
 
 ```javascript
-// simple use
 var cbCtx = $('#myChessBoard').chessBoard({
     'darkColor': 'red',
 });
@@ -164,7 +162,6 @@ var cbCtx = $('#myChessBoard').chessBoard({
 Value that is compatible with jQuery's css() method and is used when a field is painted. Is not defined by default.
 
 ```javascript
-// simple use
 var cbCtx = $('#myChessBoard').chessBoard({
     'fieldCss': {
         'padding': '66px',
@@ -177,7 +174,6 @@ var cbCtx = $('#myChessBoard').chessBoard({
 CSS compatibe value for the height of a field. Is not defined by default.
 
 ```javascript
-// simple use
 var cbCtx = $('#myChessBoard').chessBoard({
     'fieldHeight': '5979px',
 });
@@ -188,7 +184,6 @@ var cbCtx = $('#myChessBoard').chessBoard({
 CSS compatible width of a field (default: _64px_).
 
 ```javascript
-// simple use
 var cbCtx = $('#myChessBoard').chessBoard({
     'fieldWidth': '96px',
 });
@@ -199,7 +194,6 @@ var cbCtx = $('#myChessBoard').chessBoard({
 CSS compatible color if a field is highlighted (default: _#4cff4c_).
 
 ```javascript
-// simple use
 var cbCtx = $('#myChessBoard').chessBoard({
     'highlightColor': '#fff',
 });
@@ -210,7 +204,6 @@ var cbCtx = $('#myChessBoard').chessBoard({
 CSS compatible color for light fields (default: _#ffce9e_).
 
 ```javascript
-// simple use
 var cbCtx = $('#myChessBoard').chessBoard({
     lightColor: '#123456',
 });
