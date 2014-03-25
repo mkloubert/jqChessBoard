@@ -244,7 +244,7 @@ The structure has the following defaults:
 }
 ```
 
-Instead of string values that represent HTML code it is also possible to define a function.
+Instead of string values that represent HTML code, it is also possible to define functions for one or more properties.
 
 ```javascript
 {
