@@ -254,7 +254,7 @@ Instead of string values that represent HTML code, it is also possible to define
 }
 ```
 
-_ctx.type_ can contain the following values:
+_ctx.type.class_ can contain the following values:
 
 * BISHOP
 * KING
