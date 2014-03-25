@@ -214,6 +214,60 @@ var cbCtx = $('#myChessBoard').chessBoard({
 });
 ```
 
+##### pieces
+
+Defines a data structure that defines what content should be generated for a specific piece.
+
+The structure has the following defaults:
+
+```javascript
+{
+    'black': {
+        'bishop': '&#9821;',
+        'king'  : '&#9818;',
+        'knight': '&#9822;',
+        'pawn'  : '&#9817;',
+        'queen' : '&#9819;',
+        'rock'  : '&#9820;',
+    },
+
+    'none': '',
+    
+    'white': {
+        'bishop': '&#9815;',
+        'king'  : '&#9812;',
+        'knight': '&#9816;',
+        'pawn'  : '&#9823;',
+        'queen' : '&#9813;',
+        'rock'  : '&#9814;',
+    },
+}
+```
+
+Instead of string values that represent HTML code it is also possible to define a function.
+
+```javascript
+{
+    'none': function(ctx) {
+        // ctx.piece => the jQuery object that represents the piece
+        
+        // ctx.type.class => upper case name of the piece class
+        // ctx.type.color => color: 'W' for white or 'B' for black
+        
+        // ctx.type can be (null) if no piece is defined
+    },
+}
+```
+
+_ctx.type_ can contain the following values:
+
+* BISHOP
+* KING
+* KNIGHT
+* PAWN
+* QUEEN
+* ROCK
+
 ### Result
 
 A call of the plugin's method returns an object that provides features to handle all created chessboards.
