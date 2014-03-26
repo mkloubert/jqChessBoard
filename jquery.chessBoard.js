@@ -127,6 +127,12 @@
                 _onResizeFunc();
                 ctx.field.resize(_onResizeFunc);
             },
+            'onPaintNotationField': function(ctx) {
+                ctx.field.css('overflow'      , 'hidden');
+                ctx.field.css('padding'       , '8px');
+                ctx.field.css('text-align'    , 'center');
+                ctx.field.css('vertical-align', 'middle');
+            },
             'onPaintPiece': function(ctx) {
                 ctx.piece.css('display'       , 'block');
                 ctx.piece.css('font-size'     , opts.pieceSize);
@@ -144,6 +150,10 @@
             },
             'pieceSize': '48px',
             'setStartPosition': false,
+            'showBottomNotation': true,
+            'showLeftNotation': true,
+            'showRightNotation': false,
+            'showTopNotation': false,
         }, opts);
         
         opts.pieces = $.extend({
@@ -178,13 +188,74 @@
                     }
                 };
             };
+            
+            var _addNotationRow = function(nrType) {
+                var newNotationRow = $('<tr></tr>');
+                newNotationRow.addClass('cbNotationRow');
+                newNotationRow.addClass('cbNotationRow' + nrType);
                 
+                for (var x = -1; x < 8; x++) {
+                    var cn = colNames.charAt(x);
+                    
+                    var newNotationField = $('<td></td>');
+                    newNotationField.addClass('cbNotationField');
+                    newNotationField.addClass('cbNotationField' + cn);
+                    newNotationField.addClass('cbNotationField' + cn + nrType);
+                    newNotationField.addClass('cbNotationField' + nrType);
+
+                    if (x > -1) {
+                        newNotationField.text(cn);
+                    }
+                    
+                    if (opts.onPaintNotationField) {
+                        opts.onPaintNotationField({
+                            field: newNotationField,
+                            pos: x,
+                            type: nrType.toUpperCase(),
+                        });
+                    }
+                    
+                    newNotationRow.append(newNotationField);
+                }
+                
+                tbl.append(newNotationRow);
+            };
+            
+            if (opts.showTopNotation) {
+                _addNotationRow('Top');
+            } 
+            
             for (var y = 0; y < 8; y++) {
                 var newRow = $('<tr></tr>');
                 newRow.addClass('cbRow');
                 newRow.addClass('cbRow' + (y % 2 == 0 ? 'Odd' : 'Even'));
                 newRow.addClass('cbRow' + rowNames.charAt(y));
                 
+                var _addNotationField = function(nrType) {
+                    var rn = rowNames.charAt(y);
+                
+                    var newNotationField = $('<td></td>');
+                    newNotationField.addClass('cbNotationField');
+                    newNotationField.addClass('cbNotationField' + rn);
+                    newNotationField.addClass('cbNotationField' + rn + nrType);
+                    newNotationField.addClass('cbNotationField' + nrType);
+                    newNotationField.text(rn);
+                    
+                    if (opts.onPaintNotationField) {
+                        opts.onPaintNotationField({
+                            field: newNotationField,
+                            pos: y,
+                            type: nrType,
+                        });
+                    }
+                    
+                    newRow.append(newNotationField);
+                };
+                
+                if (opts.showLeftNotation) {
+                    _addNotationField('Left');
+                } 
+
                 for (var x = 0; x < 8; x++) {
                     var fieldName = colNames.charAt(x) + rowNames.charAt(y);
                     
@@ -207,8 +278,16 @@
                     newField.appendTo(newRow);
                 }
                 
+                if (opts.showRightNotation) {
+                    _addNotationField('Right');
+                }
+                
                 tbl.append(newRow);
             }
+            
+            if (opts.showBottomNotation) {
+                _addNotationRow('Bottom');
+            } 
             
             if (opts.css) {
                 tbl.css(opts.css);
