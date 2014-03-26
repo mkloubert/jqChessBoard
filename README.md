@@ -308,6 +308,7 @@ Defines if _startPosition()_ method should be called or not.
 var cbCtx = $('#myChessBoard').chessBoard({
     'setStartPosition': true,
 });
+```
 
 ### Result
 
