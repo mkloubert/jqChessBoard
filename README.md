@@ -125,6 +125,18 @@ Is invoked if a field gets highlighted.
 
 Is invoked when a field is painted.
 
+###### onPaintNotationField
+
+Is invoked if a notation field is painted. The event receives an argument of the following structure:
+
+```javascript
+{
+    'field': /* jQuery object that represents the field */,
+    'pos': /* X- or Y-cooridnate of the field */,
+    'type': /* LEFT, RIGHT (Y coordinate), BOTTOM or TOP (X coordinate) */,
+}
+```
+
 ###### onPaintPiece
 
 Is invoked when a piece is painted.
@@ -270,6 +282,19 @@ CSS compatible size of a piece (default: _48px_).
 ```javascript
 var cbCtx = $('#myChessBoard').chessBoard({
     'pieceSize': '32px',
+});
+```
+
+##### show*Notation
+
+The following options define what notation should be visible / drawn or not:
+
+```javascript
+var cbCtx = $('#myChessBoard').chessBoard({
+    'showBottomNotation': true,  // bottom (A-H); (true) by default
+    'showLeftNotation': true,    // left (1-8); (true) by default
+    'showRightNotation': true,   // right (1-8); (false) by default
+    'showTopNotation': true,     // top (A-H); (false) by default
 });
 ```
 
