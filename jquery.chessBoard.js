@@ -24,6 +24,8 @@
   
 (function($) {
     $.fn.chessBoard = function(opts) {
+        var pluginSelector = this;
+    
         var rowNames = '87654321';
         var colNames = 'ABCDEFGH';
               
@@ -38,7 +40,6 @@
 
                     return this;
                 },
-                'field': field,
                 'highlight': function() {
                     this.field.addClass('cbFieldHighlighted');
                     
@@ -65,10 +66,22 @@
                 },
             };
             
+            var _getField = field;
+            if (typeof(_getField) != "function") {
+                _getField = function() {
+                    return field;
+                };
+            }
+            
+            Object.defineProperty(fieldObj, 'field', {
+                get: _getField,
+            });
+            
             Object.defineProperty(fieldObj, 'isHighlighted', {
                 get: function () {
-                    return this.field.hasClass('cbFieldHighlighted');
-                }
+                    return this.field
+                               .hasClass('cbFieldHighlighted');
+                },
             });
             
             return fieldObj;
@@ -347,9 +360,14 @@
                         return this;
                     },
                     'getPiece': function() {
-                        var p = {
-                            'selector': this.selector.find('.cbPiece'),
-                        };
+                        var p = {};
+                        
+                        var fieldSelector = this.selector;
+                        Object.defineProperty(p, 'selector', {
+                            get: function () {
+                                return fieldSelector.find('.cbPiece');
+                            },
+                        });
                         
                         var clsName = p.selector.attr('class');
                         
@@ -396,15 +414,21 @@
                         this.selector.html('');
                         return;
                     },
-                    'selector': this.selector
-                                    .find('.cbField' + field),
                     'toggleHighlight': function() {
                         this._C2B52D8B72994977B33B4C47ED0AE379.toggleHighlight();
                         return this;
                     },
                 };
                 
-                fieldObj._C2B52D8B72994977B33B4C47ED0AE379 = _createFieldObject(fieldObj.selector, fieldObj.name,
+                var _getFieldObjSelector = function() {
+                    return pluginSelector.find('.cbField' + field);
+                };
+                
+                Object.defineProperty(fieldObj, 'selector', {
+                    get: _getFieldObjSelector,
+                });
+                
+                fieldObj._C2B52D8B72994977B33B4C47ED0AE379 = _createFieldObject(_getFieldObjSelector, fieldObj.name,
                                                                                 fieldObj.pos.x, fieldObj.pos.y);
                 
                 return fieldObj;
@@ -421,7 +445,6 @@
                 this.getField().removePiece();
                 return this;
             },
-            'selector': this.find('.chessBoard'),
             'setBishop': function() {
                 return this.setPiece(_createSpecificPieceOpts(arguments,
                                                               'BLACK_BISHOP', 'WHITE_BISHOP'));
@@ -678,6 +701,12 @@
                 return this;
             },
         };
+        
+        Object.defineProperty(result, 'selector', {
+            get: function () {
+                return pluginSelector.find('.chessBoard');
+            },
+        });
         
         if (opts.setStartPosition) {
             result.startPosition();
