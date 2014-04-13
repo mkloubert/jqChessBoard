@@ -341,7 +341,7 @@ cbCtx.clear();
 Returns a field.
 
 ```javascript
-var fieldA1 = cbCtx.field('a1');
+var fieldA1 = cbCtx.getField('a1');
 ```
 
 ##### getHighlighted()
