@@ -185,7 +185,7 @@ var cbCtx = $('#myChessBoard').chessBoard({
 
 ##### fieldHeight
 
-CSS compatibe value for the height of a field. Is not defined by default.
+CSS compatible value for the height of a field. Is not defined by default.
 
 ```javascript
 var cbCtx = $('#myChessBoard').chessBoard({
