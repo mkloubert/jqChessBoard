@@ -3,7 +3,7 @@ jquery-chessBoard
 
 jQuery based library for building and painting chess boards WITHOUT game engines and computer player algorithms.
 
-No external resources like images are required. You only need the JavaScript file to include into your HTML document, because all pieces are drawn as [Unicode characters](https://en.wikipedia.org/wiki/Chess_symbols_in_Unicode/ "Wikipedia: Chess symbols in Unicode").
+No external resources like images are required. You only need the JavaScript file to include into your HTML document, because all pieces are drawn as [Unicode characters](https://en.wikipedia.org/wiki/Chess_symbols_in_Unicode "Wikipedia: Chess symbols in Unicode").
 
 ![Screenshot (Firefox 28)](https://raw.githubusercontent.com/mkloubert/jquery-chessBoard/master/screenshot.png)
 
